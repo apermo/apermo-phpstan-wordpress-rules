@@ -1,0 +1,13 @@
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+
+parameters:
+    level: 6
+    paths:
+        - src
+    strictRules:
+        allRules: false
+        booleansInConditions: true
+        disallowedLooseComparison: true
+        strictFunctionCalls: true
+        disallowedEmpty: true

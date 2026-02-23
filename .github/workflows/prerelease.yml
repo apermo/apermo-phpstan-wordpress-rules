@@ -1,0 +1,75 @@
+name: Prerelease
+
+on:
+    workflow_dispatch:
+        inputs:
+            label:
+                description: 'Prerelease label (e.g. beta.1, RC.1)'
+                required: true
+
+jobs:
+    prerelease:
+        name: Create Prerelease
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            pull-requests: write
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Validate branch
+              run: |
+                  BRANCH="${{ github.ref_name }}"
+                  if [[ ! "$BRANCH" =~ ^release/ ]]; then
+                      echo "::error::Prereleases must be created from a release/* branch"
+                      exit 1
+                  fi
+
+            - name: Extract version and create tag
+              id: version
+              run: |
+                  VERSION=$(grep -m1 -oP '(?<=## \[)\d+\.\d+\.\d+[^]]*' CHANGELOG.md || echo "")
+
+                  if [ -z "$VERSION" ]; then
+                      echo "::error::No version found in CHANGELOG.md"
+                      exit 1
+                  fi
+
+                  BASE_VERSION=$(echo "$VERSION" | grep -oP '^\d+\.\d+\.\d+')
+                  TAG="v${BASE_VERSION}-${{ github.event.inputs.label }}"
+
+                  echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+                  echo "Tag: $TAG"
+
+            - name: Create prerelease
+              run: |
+                  gh release create "${{ steps.version.outputs.tag }}" \
+                      --title "${{ steps.version.outputs.tag }}" \
+                      --target "${{ github.ref_name }}" \
+                      --generate-notes \
+                      --prerelease
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Comment on associated PR
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      const branch = context.ref.replace('refs/heads/', '');
+                      const { data: prs } = await github.rest.pulls.list({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          head: `${context.repo.owner}:${branch}`,
+                          state: 'open',
+                      });
+
+                      for (const pr of prs) {
+                          await github.rest.issues.createComment({
+                              issue_number: pr.number,
+                              owner: context.repo.owner,
+                              repo: context.repo.repo,
+                              body: `🏷️ Prerelease [${{ steps.version.outputs.tag }}](https://github.com/${context.repo.owner}/${context.repo.repo}/releases/tag/${{ steps.version.outputs.tag }}) created.`
+                          });
+                      }

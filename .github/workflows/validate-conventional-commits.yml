@@ -1,0 +1,50 @@
+name: Validate Conventional Commits
+
+on:
+    pull_request:
+    push:
+        branches:
+            - main
+
+jobs:
+    validate:
+        name: Validate Commit Messages
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Validate commits
+              run: |
+                  FAILED=0
+
+                  if [ "${{ github.event_name }}" = "pull_request" ]; then
+                      COMMITS=$(git log --format="%H %s" origin/${{ github.base_ref }}..HEAD)
+                  else
+                      COMMITS=$(git log --format="%H %s" -1)
+                  fi
+
+                  while IFS= read -r line; do
+                      [ -z "$line" ] && continue
+
+                      HASH=$(echo "$line" | cut -d' ' -f1)
+                      MSG=$(echo "$line" | cut -d' ' -f2-)
+
+                      # Skip merge commits
+                      if [[ "$MSG" =~ ^Merge\ ]]; then
+                          continue
+                      fi
+
+                      if ! echo "$MSG" | grep -qP '^(feat|fix|docs|style|refactor|test|chore|perf)(\(.+\))?: .{1,}$'; then
+                          echo "::error::Invalid commit message: $MSG ($HASH)"
+                          FAILED=1
+                      fi
+
+                      if [ ${#MSG} -gt 72 ]; then
+                          echo "::error::Commit message too long (${#MSG} > 72): $MSG"
+                          FAILED=1
+                      fi
+                  done <<< "$COMMITS"
+
+                  exit $FAILED

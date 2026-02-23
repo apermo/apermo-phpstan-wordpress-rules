@@ -1,5 +1,9 @@
 # Apermo PHPStan WordPress Rules
 
+[![CI](https://github.com/apermo/apermo-phpstan-wordpress-rules/actions/workflows/ci.yml/badge.svg)](https://github.com/apermo/apermo-phpstan-wordpress-rules/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/apermo/apermo-phpstan-wordpress-rules/branch/main/graph/badge.svg)](https://codecov.io/gh/apermo/apermo-phpstan-wordpress-rules)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 Custom PHPStan rules for WordPress projects. Provides a unified static analysis configuration and custom rules across all Apermo projects.
 
 ## Requirements
@@ -30,10 +34,6 @@ includes:
 
 *Rules will be added as the package evolves.*
 
-### Baseline Configuration
-
-This package provides a shared baseline PHPStan configuration for WordPress projects, including sensible defaults for WordPress plugin and theme development.
-
 ## Development
 
 ### Setup
@@ -48,10 +48,16 @@ composer install
 composer test
 ```
 
-### Running PHPStan on Itself
+### Static Analysis
 
 ```bash
 composer analyse
+```
+
+### Coding Standards
+
+```bash
+composer cs
 ```
 
 ## License

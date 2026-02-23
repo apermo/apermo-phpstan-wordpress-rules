@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ruleset name="Apermo PHPStan WordPress Rules">
+    <description>Coding standards for the Apermo PHPStan WordPress Rules package.</description>
+
+    <file>src</file>
+    <file>tests</file>
+
+    <exclude-pattern>tests/data/*</exclude-pattern>
+
+    <rule ref="Apermo"/>
+</ruleset>
