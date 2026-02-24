@@ -3,3 +3,4 @@ parameters:
 services:
 
 rules:
+    - Apermo\PhpStanWordPressRules\Rules\DisallowQueryPostsRule
