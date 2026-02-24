@@ -12,6 +12,7 @@ services:
 
 rules:
     - Apermo\PhpStanWordPressRules\Rules\DisallowQueryPostsRule
+    - Apermo\PhpStanWordPressRules\Rules\NoConcatenationInTranslationRule
     - Apermo\PhpStanWordPressRules\Rules\NoDynamicCodeExecutionRule
     - Apermo\PhpStanWordPressRules\Rules\NoEvalRule
     - Apermo\PhpStanWordPressRules\Rules\NoHtmlDomParsingFuncCallRule
