@@ -6,3 +6,4 @@ rules:
     - Apermo\PhpStanWordPressRules\Rules\DisallowQueryPostsRule
     - Apermo\PhpStanWordPressRules\Rules\PostTypeNameLengthRule
     - Apermo\PhpStanWordPressRules\Rules\TaxonomyNameLengthRule
+    - Apermo\PhpStanWordPressRules\Rules\TransientExpirationRule
