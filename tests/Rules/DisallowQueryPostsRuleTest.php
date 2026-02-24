@@ -9,26 +9,39 @@ use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 
 /**
+ * Tests for DisallowQueryPostsRule.
+ *
  * @extends RuleTestCase<DisallowQueryPostsRule>
  */
-final class DisallowQueryPostsRuleTest extends RuleTestCase
-{
-	protected function getRule(): Rule
-	{
+final class DisallowQueryPostsRuleTest extends RuleTestCase {
+
+	/**
+	 * Creates the rule under test.
+	 *
+	 * @return Rule
+	 */
+	protected function getRule(): Rule {
 		return new DisallowQueryPostsRule();
 	}
 
-	public function testRule(): void
-	{
-		$this->analyse([__DIR__ . '/../data/disallow-query-posts.php'], [
+	/**
+	 * Tests that query_posts() calls are flagged.
+	 *
+	 * @return void
+	 */
+	public function testRule(): void {
+		$this->analyse(
+			[ __DIR__ . '/../data/disallow-query-posts.php' ],
 			[
-				'Do not use query_posts(). Use WP_Query or get_posts() instead.',
-				6,
-			],
-			[
-				'Do not use query_posts(). Use WP_Query or get_posts() instead.',
-				7,
-			],
-		]);
+				[
+					'Do not use query_posts(). Use WP_Query or get_posts() instead.',
+					6,
+				],
+				[
+					'Do not use query_posts(). Use WP_Query or get_posts() instead.',
+					7,
+				],
+			]
+		);
 	}
 }

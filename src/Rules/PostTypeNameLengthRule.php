@@ -13,42 +13,54 @@ use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 
 /**
+ * Flags register_post_type() calls where the name exceeds 20 characters.
+ *
  * @implements Rule<FuncCall>
  */
-final class PostTypeNameLengthRule implements Rule
-{
+final class PostTypeNameLengthRule implements Rule {
+
 	private const MAX_LENGTH = 20;
 
-	public function getNodeType(): string
-	{
+	/**
+	 * Returns the node type this rule processes.
+	 *
+	 * @return class-string<FuncCall>
+	 */
+	public function getNodeType(): string {
 		return FuncCall::class;
 	}
 
-	public function processNode(Node $node, Scope $scope): array
-	{
-		if (!$node->name instanceof Name) {
+	/**
+	 * Processes a function call node.
+	 *
+	 * @param \PhpParser\Node\Expr\FuncCall $node  Function call node.
+	 * @param Scope                         $scope Analysis scope.
+	 * @return list<\PHPStan\Rules\IdentifierRuleError>
+	 */
+	public function processNode( Node $node, Scope $scope ): array { // phpcs:ignore Squiz.Commenting.FunctionComment.IncorrectTypeHint -- Rule interface requires Node
+		if ( ! $node->name instanceof Name ) {
 			return [];
 		}
 
-		if ($node->name->toLowerString() !== 'register_post_type') {
+		if ( $node->name->toLowerString() !== 'register_post_type' ) {
 			return [];
 		}
 
 		$args = $node->getArgs();
 
-		if ($args === []) {
+		if ( $args === [] ) {
 			return [];
 		}
 
-		$firstArg = $args[0]->value;
+		$first_arg = $args[0]->value;
 
-		if (!$firstArg instanceof String_) {
+		if ( ! $first_arg instanceof String_ ) {
 			return [];
 		}
 
-		$length = strlen($firstArg->value);
+		$length = strlen( $first_arg->value );
 
-		if ($length <= self::MAX_LENGTH) {
+		if ( $length <= self::MAX_LENGTH ) {
 			return [];
 		}
 
@@ -56,11 +68,11 @@ final class PostTypeNameLengthRule implements Rule
 			RuleErrorBuilder::message(
 				sprintf(
 					'Post type name "%s" is %d characters long. WordPress limits post type names to %d characters.',
-					$firstArg->value,
+					$first_arg->value,
 					$length,
 					self::MAX_LENGTH,
 				)
-			)->identifier('apermo.postTypeNameLength')->build(),
+			)->identifier( 'apermo.postTypeNameLength' )->build(),
 		];
 	}
 }
