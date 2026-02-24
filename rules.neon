@@ -19,3 +19,4 @@ rules:
     - Apermo\PhpStanWordPressRules\Rules\PreSerializedDataRule
     - Apermo\PhpStanWordPressRules\Rules\TaxonomyNameLengthRule
     - Apermo\PhpStanWordPressRules\Rules\TransientExpirationRule
+    - Apermo\PhpStanWordPressRules\Rules\UnsafeUnserializeRule
