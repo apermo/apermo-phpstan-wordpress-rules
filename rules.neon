@@ -14,6 +14,9 @@ rules:
     - Apermo\PhpStanWordPressRules\Rules\DisallowQueryPostsRule
     - Apermo\PhpStanWordPressRules\Rules\NoDynamicCodeExecutionRule
     - Apermo\PhpStanWordPressRules\Rules\NoEvalRule
+    - Apermo\PhpStanWordPressRules\Rules\NoHtmlDomParsingFuncCallRule
+    - Apermo\PhpStanWordPressRules\Rules\NoHtmlDomParsingNewRule
+    - Apermo\PhpStanWordPressRules\Rules\NoHtmlDomParsingRule
     - Apermo\PhpStanWordPressRules\Rules\PostTypeNameLengthRule
     - Apermo\PhpStanWordPressRules\Rules\PreEncodedJsonDataRule
     - Apermo\PhpStanWordPressRules\Rules\PreSerializedDataRule
