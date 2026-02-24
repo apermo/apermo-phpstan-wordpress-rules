@@ -1,9 +1,19 @@
 parameters:
 
 services:
+    -
+        class: Apermo\PhpStanWordPressRules\Extensions\SerializeReturnTypeExtension
+        tags:
+            - phpstan.broker.dynamicFunctionReturnTypeExtension
+    -
+        class: Apermo\PhpStanWordPressRules\Extensions\JsonEncodeReturnTypeExtension
+        tags:
+            - phpstan.broker.dynamicFunctionReturnTypeExtension
 
 rules:
     - Apermo\PhpStanWordPressRules\Rules\DisallowQueryPostsRule
     - Apermo\PhpStanWordPressRules\Rules\PostTypeNameLengthRule
+    - Apermo\PhpStanWordPressRules\Rules\PreEncodedJsonDataRule
+    - Apermo\PhpStanWordPressRules\Rules\PreSerializedDataRule
     - Apermo\PhpStanWordPressRules\Rules\TaxonomyNameLengthRule
     - Apermo\PhpStanWordPressRules\Rules\TransientExpirationRule
