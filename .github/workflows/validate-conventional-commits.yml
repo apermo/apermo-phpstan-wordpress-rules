@@ -32,7 +32,7 @@ jobs:
                       MSG=$(echo "$line" | cut -d' ' -f2-)
 
                       # Skip merge commits
-                      if [[ "$MSG" =~ ^Merge\ ]]; then
+                      if [[ "$MSG" == Merge* ]]; then
                           continue
                       fi
 

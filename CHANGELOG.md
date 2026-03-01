@@ -24,6 +24,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - NoHtmlDomParsingRule, NoHtmlDomParsingFuncCallRule, NoHtmlDomParsingNewRule: flag non-WP HTML parsing
 - NoConcatenationInTranslationRule: flag string concatenation in translation functions
 - NoBlanketSuppressionRule: flag `phpcs:disable`/`phpcs:ignore`/`@phpstan-ignore` without specific rules
+
+### Fixed
+
+- Bash syntax error in commit validation workflow (`^Merge\ ` regex)
 - SerializedStringType and JsonEncodedStringType branded types for data-flow tracking
 - SerializeReturnTypeExtension and JsonEncodeReturnTypeExtension type extensions
 
