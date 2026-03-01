@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Apermo\PhpStanWordPressRules\Rules;
 
+use Apermo\PhpStanWordPressRules\Constants\WordPressStorageFunctions;
 use Apermo\PhpStanWordPressRules\Type\SerializedStringType;
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
@@ -23,35 +24,6 @@ final class PreSerializedDataRule implements Rule {
 		'serialize',
 		'maybe_serialize',
 	];
-
-	// phpcs:disable Apermo.DataStructures.ArrayComplexity.TooManyKeysError -- WordPress has many storage functions
-	/**
-	 * WordPress storage functions and the 0-based index of their value parameter.
-	 *
-	 * @var array<string, int>
-	 */
-	private const WP_STORAGE_FUNCTIONS = [
-		'add_option'             => 1,
-		'update_option'          => 1,
-		'add_network_option'     => 2,
-		'update_network_option'  => 2,
-		'add_metadata'           => 3,
-		'update_metadata'        => 3,
-		'update_metadata_by_mid' => 2,
-		'add_post_meta'          => 2,
-		'update_post_meta'       => 2,
-		'add_user_meta'          => 2,
-		'update_user_meta'       => 2,
-		'add_comment_meta'       => 2,
-		'update_comment_meta'    => 2,
-		'add_term_meta'          => 2,
-		'update_term_meta'       => 2,
-		'add_site_meta'          => 2,
-		'update_site_meta'       => 2,
-		'set_transient'          => 1,
-		'set_site_transient'     => 1,
-	];
-	// phpcs:enable Apermo.DataStructures.ArrayComplexity.TooManyKeysError
 
 	/**
 	 * Returns the node type this rule processes.
@@ -76,11 +48,11 @@ final class PreSerializedDataRule implements Rule {
 
 		$function_name = $node->name->toLowerString();
 
-		if ( ! isset( self::WP_STORAGE_FUNCTIONS[ $function_name ] ) ) {
+		if ( ! isset( WordPressStorageFunctions::VALUE_PARAM_INDEX[ $function_name ] ) ) {
 			return [];
 		}
 
-		$value_index = self::WP_STORAGE_FUNCTIONS[ $function_name ];
+		$value_index = WordPressStorageFunctions::VALUE_PARAM_INDEX[ $function_name ];
 		$args        = $node->getArgs();
 
 		if ( ! isset( $args[ $value_index ] ) ) {

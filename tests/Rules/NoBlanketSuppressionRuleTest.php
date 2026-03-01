@@ -57,6 +57,14 @@ final class NoBlanketSuppressionRuleTest extends RuleTestCase {
 					'No error to ignore is reported on line 28.',
 					28,
 				],
+				[
+					'Blanket suppression is not allowed. Specify which rules to suppress.',
+					30,
+				],
+				[
+					'No error with identifier argument.type is reported on line 34.',
+					34,
+				],
 			]
 		);
 	}

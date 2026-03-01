@@ -20,7 +20,7 @@ use PHPStan\Rules\RuleErrorBuilder;
 final class TransientExpirationRule implements Rule {
 
 	private const FUNCTIONS = [
-		'set_transient' => 2,
+		'set_transient'      => 2,
 		'set_site_transient' => 2,
 	];
 

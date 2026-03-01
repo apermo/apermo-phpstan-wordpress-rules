@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9ca64f698409b9d1646c17e05f5a6eb7",
+    "content-hash": "1fb7f12fca6486756124c89be519ada3",
     "packages": [
         {
             "name": "php-stubs/wordpress-stubs",

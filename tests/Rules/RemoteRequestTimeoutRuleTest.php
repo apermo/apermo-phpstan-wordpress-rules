@@ -54,12 +54,16 @@ final class RemoteRequestTimeoutRuleTest extends RuleTestCase {
 					10,
 				],
 				[
+					'wp_safe_remote_request() called without an explicit timeout. Pass a timeout in the $args array, e.g. [\'timeout\' => 10].',
+					11,
+				],
+				[
 					'wp_remote_get() called without an explicit timeout. Add a \'timeout\' key to the $args array.',
-					13,
+					14,
 				],
 				[
 					'wp_remote_post() called without an explicit timeout. Add a \'timeout\' key to the $args array.',
-					14,
+					15,
 				],
 			]
 		);

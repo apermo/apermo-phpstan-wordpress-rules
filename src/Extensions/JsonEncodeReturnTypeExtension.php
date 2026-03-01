@@ -8,8 +8,10 @@ use Apermo\PhpStanWordPressRules\Type\JsonEncodedStringType;
 use PhpParser\Node\Expr\FuncCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\FunctionReflection;
+use PHPStan\Type\Constant\ConstantBooleanType;
 use PHPStan\Type\DynamicFunctionReturnTypeExtension;
 use PHPStan\Type\Type;
+use PHPStan\Type\UnionType;
 
 /**
  * Marks json_encode() and wp_json_encode() return values as JsonEncodedStringType.
@@ -47,6 +49,6 @@ final class JsonEncodeReturnTypeExtension implements DynamicFunctionReturnTypeEx
 		FuncCall $functionCall, // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase -- PHPStan interface
 		Scope $scope,
 	): Type {
-		return new JsonEncodedStringType();
+		return new UnionType( [ new JsonEncodedStringType(), new ConstantBooleanType( false ) ] );
 	}
 }

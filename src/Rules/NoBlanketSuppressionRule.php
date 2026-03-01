@@ -91,6 +91,11 @@ final class NoBlanketSuppressionRule implements Rule {
 			return true;
 		}
 
+		// Blanket inline phpstan-ignore with no identifiers.
+		if ( preg_match( '/^\x40phpstan-ignore\s*$/i', $content ) === 1 ) {
+			return true;
+		}
+
 		return false;
 	}
 

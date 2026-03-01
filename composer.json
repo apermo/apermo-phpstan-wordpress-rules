@@ -30,7 +30,6 @@
     },
     "require-dev": {
         "apermo/apermo-coding-standards": "^2.0",
-        "php-stubs/wordpress-stubs": "^6.0",
         "phpunit/phpunit": "^11.0"
     },
     "autoload": {

@@ -37,7 +37,7 @@ final class NoEvalRule implements Rule {
 		return [
 			RuleErrorBuilder::message(
 				'Do not use eval(). It executes arbitrary PHP code and enables remote code execution.'
-			)->identifier( 'apermo.noDynamicCodeExecution' )->build(),
+			)->identifier( 'apermo.noEval' )->build(),
 		];
 	}
 }

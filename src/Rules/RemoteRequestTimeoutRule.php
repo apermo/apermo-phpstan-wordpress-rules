@@ -31,6 +31,7 @@ final class RemoteRequestTimeoutRule implements Rule {
 		'wp_remote_request',
 		'wp_safe_remote_get',
 		'wp_safe_remote_post',
+		'wp_safe_remote_request',
 	];
 
 	/**
@@ -102,6 +103,10 @@ final class RemoteRequestTimeoutRule implements Rule {
 	 */
 	private function has_timeout_key( Array_ $args_array ): bool {
 		foreach ( $args_array->items as $item ) {
+			if ( $item === null ) { // @phpstan-ignore identical.alwaysFalse (Array_::$items can contain null for spread operators)
+				continue;
+			}
+
 			if ( $item->key instanceof String_ && $item->key->value === 'timeout' ) {
 				return true;
 			}

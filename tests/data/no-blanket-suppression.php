@@ -26,3 +26,9 @@ $g = 7;
 
 // @phpstan-ignore-next-line
 $h = 8;
+
+// @phpstan-ignore
+$i = 9;
+
+// @phpstan-ignore argument.type
+$j = 10;

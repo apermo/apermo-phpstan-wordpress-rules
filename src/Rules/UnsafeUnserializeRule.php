@@ -80,6 +80,10 @@ final class UnsafeUnserializeRule implements Rule {
 	 */
 	private function has_allowed_classes_key( Array_ $options_array ): bool {
 		foreach ( $options_array->items as $item ) {
+			if ( $item === null ) { // @phpstan-ignore identical.alwaysFalse (Array_::$items can contain null for spread operators)
+				continue;
+			}
+
 			if ( $item->key instanceof String_ && $item->key->value === 'allowed_classes' ) {
 				return true;
 			}
