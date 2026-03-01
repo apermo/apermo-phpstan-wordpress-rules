@@ -25,11 +25,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - NoConcatenationInTranslationRule: flag string concatenation in translation functions
 - NoBlanketSuppressionRule: flag `phpcs:disable`/`phpcs:ignore`/`@phpstan-ignore` without specific rules
 
+- SerializedStringType and JsonEncodedStringType branded types for data-flow tracking
+- SerializeReturnTypeExtension and JsonEncodeReturnTypeExtension type extensions
+
 ### Fixed
 
 - Bash syntax error in commit validation workflow (`^Merge\ ` regex)
-- SerializedStringType and JsonEncodedStringType branded types for data-flow tracking
-- SerializeReturnTypeExtension and JsonEncodeReturnTypeExtension type extensions
 
 ## [0.1.0] - Unreleased
 

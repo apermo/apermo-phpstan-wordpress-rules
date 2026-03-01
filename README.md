@@ -30,9 +30,32 @@ includes:
 
 ## What's Included
 
+### Bundled Extensions
+
+This package automatically includes:
+
+- [phpstan-strict-rules](https://github.com/phpstan/phpstan-strict-rules)
+- [phpstan-deprecation-rules](https://github.com/phpstan/phpstan-deprecation-rules)
+- [phpstan-wordpress](https://github.com/szepeviktor/phpstan-wordpress)
+- [phpstan-no-private](https://github.com/swissspidy/phpstan-no-private)
+
 ### Custom Rules
 
-*Rules will be added as the package evolves.*
+| Rule | Category | What it detects |
+|------|----------|-----------------|
+| DisallowQueryPostsRule | wp-api | `query_posts()` usage |
+| PostTypeNameLengthRule | wp-api | `register_post_type()` name > 20 chars |
+| TaxonomyNameLengthRule | wp-api | `register_taxonomy()` name > 32 chars |
+| TransientExpirationRule | wp-api | `set_transient()` without expiration |
+| RemoteRequestTimeoutRule | wp-api | `wp_remote_*` without explicit timeout |
+| PreSerializedDataRule | data-integrity | Pre-serialized data in WP storage functions |
+| PreEncodedJsonDataRule | data-integrity | Pre-encoded JSON in WP storage functions |
+| NoDynamicCodeExecutionRule | security | `create_function()`, `assert()` with string, `preg_replace()` with `/e` |
+| NoEvalRule | security | `eval()` usage |
+| UnsafeUnserializeRule | security | `unserialize()` without `allowed_classes` |
+| NoHtmlDomParsingRule | code-quality | `DOMDocument::loadHTML`, tidy functions, `Masterminds\HTML5` |
+| NoConcatenationInTranslationRule | i18n | String concatenation inside `__()`, `_e()`, etc. |
+| NoBlanketSuppressionRule | code-quality | `phpcs:disable`/`phpcs:ignore`/`@phpstan-ignore` without specific rules |
 
 ## Development
 
