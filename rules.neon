@@ -11,7 +11,10 @@ services:
             - phpstan.broker.dynamicFunctionReturnTypeExtension
 
 rules:
+    - Apermo\PhpStanWordPressRules\Rules\AutoloadComplexDataRule
     - Apermo\PhpStanWordPressRules\Rules\DisallowQueryPostsRule
+    - Apermo\PhpStanWordPressRules\Rules\SprintfTranslationMismatchRule
+    - Apermo\PhpStanWordPressRules\Rules\WpQueryNoFoundRowsRule
     - Apermo\PhpStanWordPressRules\Rules\FilterDocParamMismatchRule
     - Apermo\PhpStanWordPressRules\Rules\ActionDocParamMismatchRule
     - Apermo\PhpStanWordPressRules\Rules\NoBlanketSuppressionRule
