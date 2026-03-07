@@ -31,7 +31,8 @@ final class ActionDocParamMismatchRuleTest extends RuleTestCase {
 	}
 
 	/**
-	 * Loads rules.neon so HookDocsVisitor is registered during fixture analysis.
+	 * Loads phpstan-szepeviktor-services.neon (HookDocBlock + HookDocsVisitor)
+	 * and rules.neon for the full DI context needed by the rule under test.
 	 *
 	 * @return string[]
 	 */
