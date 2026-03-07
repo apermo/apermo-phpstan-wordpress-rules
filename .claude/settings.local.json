@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh api:*)",
+      "Bash(composer cs-fix:*)",
+      "Bash(composer cs:*)",
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "Bash(gh milestone:*)",
+      "Bash(gh issue:*)",
+      "Bash(gh label:*)",
+      "Bash(head:*)",
+      "Bash(git:*)",
+      "Bash(php:*)",
+      "Bash(composer analyse:*)",
+      "Bash(composer test:*)",
+      "Bash(cat:*)",
+      "Bash(gh pr:*)"
+    ]
+  }
+}
