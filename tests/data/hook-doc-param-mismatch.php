@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 $post_id = 1;
 $update = true;
+$args = [ $post_id, $update ];
 
 // --- Should NOT be flagged ---
 
@@ -16,6 +17,16 @@ do_action( 'save_post', $post_id, $update );
 
 // No PHPDoc - skip
 do_action( 'no_doc', $post_id, $update );
+
+// No args, no PHPDoc - skip
+do_action( 'init' );
+
+// Splat arg - skip (static count cannot be determined)
+/**
+ * @param int $post_id
+ * @param bool $update
+ */
+do_action( 'save_post', ...$args );
 
 // Cross-reference - skip
 /**

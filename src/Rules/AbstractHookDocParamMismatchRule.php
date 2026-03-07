@@ -123,7 +123,15 @@ abstract class AbstractHookDocParamMismatchRule implements Rule {
 		$param_tags = $php_doc->getParamTagValues();
 
 		// First arg is the hook name string — skip it.
-		$hook_args   = array_slice( $func_call->getArgs(), 1 );
+		$hook_args = array_slice( $func_call->getArgs(), 1 );
+
+		// Skip if any argument is unpacked — static count cannot be determined.
+		foreach ( $hook_args as $arg ) {
+			if ( $arg->unpack ) {
+				return [];
+			}
+		}
+
 		$param_count = count( $param_tags );
 		$arg_count   = count( $hook_args );
 
@@ -145,10 +153,6 @@ abstract class AbstractHookDocParamMismatchRule implements Rule {
 		$errors = [];
 
 		foreach ( $hook_args as $index => $arg ) {
-			if ( ! isset( $param_tags[ $index ] ) ) {
-				continue;
-			}
-
 			$declared_type = $this->resolve_type_node( $param_tags[ $index ]->type );
 			$actual_type   = $scope->getType( $arg->value );
 
@@ -177,6 +181,7 @@ abstract class AbstractHookDocParamMismatchRule implements Rule {
 	private function find_doc_comment( Expression $node ): ?string {
 		$comments = $node->getAttribute( 'comments', [] );
 
+		// Reverse to pick the doc block closest to (immediately before) the call.
 		foreach ( array_reverse( $comments ) as $comment ) {
 			if ( $comment instanceof Doc ) {
 				return $comment->getText();

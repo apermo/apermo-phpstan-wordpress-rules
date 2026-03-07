@@ -40,11 +40,11 @@ final class FilterDocParamMismatchRuleTest extends RuleTestCase {
 			[
 				[
 					'apply_filters() PHPDoc has 1 @param tag but the hook call passes 2 arguments.',
-					77,
+					88,
 				],
 				[
 					'apply_filters() @param #1 declares type int but string is passed.',
-					83,
+					94,
 				],
 			]
 		);

@@ -40,15 +40,15 @@ final class ActionDocParamMismatchRuleTest extends RuleTestCase {
 			[
 				[
 					'do_action() PHPDoc has 1 @param tag but the hook call passes 2 arguments.',
-					58,
+					69,
 				],
 				[
 					'do_action() PHPDoc has 2 @param tags but the hook call passes 1 argument.',
-					65,
+					76,
 				],
 				[
 					'do_action() @param #1 declares type string but true is passed.',
-					71,
+					82,
 				],
 			]
 		);

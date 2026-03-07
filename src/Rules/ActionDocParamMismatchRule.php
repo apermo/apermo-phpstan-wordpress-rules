@@ -19,6 +19,10 @@ final class ActionDocParamMismatchRule extends AbstractHookDocParamMismatchRule 
 	/**
 	 * Returns the do_action family of hook functions.
 	 *
+	 * The _ref_array and _deprecated variants are included so the rule recognises
+	 * their call sites; the base class skips them at runtime because their args
+	 * are array-based and cannot be statically counted.
+	 *
 	 * @return list<string>
 	 */
 	protected function getHookFunctions(): array {

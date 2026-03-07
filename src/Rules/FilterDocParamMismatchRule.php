@@ -19,6 +19,14 @@ final class FilterDocParamMismatchRule extends AbstractHookDocParamMismatchRule 
 	/**
 	 * Returns the apply_filters family of hook functions.
 	 *
+	 * For apply_filters the first @param documents the filtered value (the value
+	 * being passed through the filter), and subsequent @params document extra
+	 * arguments — identical positional mapping to do_action.
+	 *
+	 * apply_filters_ref_array and apply_filters_deprecated are included so the
+	 * rule recognises their call sites; the base class skips them at runtime
+	 * because their args are array-based and cannot be statically counted.
+	 *
 	 * @return list<string>
 	 */
 	protected function getHookFunctions(): array {
