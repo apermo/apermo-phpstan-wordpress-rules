@@ -1,0 +1,7 @@
+services:
+    -
+        class: SzepeViktor\PHPStan\WordPress\HookDocBlock
+    -
+        class: SzepeViktor\PHPStan\WordPress\HookDocsVisitor
+        tags:
+            - phpstan.parser.richParserNodeVisitor
