@@ -60,6 +60,22 @@ apply_filters( 'the_title', 'hello' );
  */
 apply_filters_ref_array( 'the_content', [ 'hello' ] );
 
+// apply_filters in assignment - correct count and types
+/**
+ * @param string $value
+ * @param int $post_id
+ */
+$filtered = apply_filters( 'the_content', 'hello', $post_id );
+
+// apply_filters in return - correct count and types
+function test_apply_filters_return_valid(): string {
+	/**
+	 * @param string $value
+	 * @param int $post_id
+	 */
+	return apply_filters( 'the_content', 'hello', 1 );
+}
+
 // --- Should be flagged ---
 
 // Count mismatch: 2 args, 1 @param
@@ -92,3 +108,17 @@ apply_filters( 'the_content', 'hello', $post_id );
  * @param int $count
  */
 apply_filters( 'my_filter', 'not-an-int' );
+
+// apply_filters count mismatch in assignment
+/**
+ * @param string $value
+ */
+$filtered2 = apply_filters( 'the_content', 'hello', $post_id );
+
+// apply_filters type mismatch in return
+function test_apply_filters_return_mismatch(): string {
+	/**
+	 * @param int $count
+	 */
+	return apply_filters( 'my_filter', 'not-an-int' );
+}

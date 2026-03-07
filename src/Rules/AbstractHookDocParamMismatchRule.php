@@ -6,9 +6,11 @@ namespace Apermo\PhpStanWordPressRules\Rules;
 
 use PhpParser\Comment\Doc;
 use PhpParser\Node;
+use PhpParser\Node\Expr\Assign;
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Expression;
+use PhpParser\Node\Stmt\Return_;
 use PHPStan\Analyser\Scope;
 use PHPStan\PhpDocParser\Ast\Type\ArrayTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\IdentifierTypeNode;
@@ -41,7 +43,7 @@ use PHPStan\Type\VoidType;
  *
  * Subclasses declare which hook functions to analyse by implementing getHookFunctions().
  *
- * @implements Rule<Expression>
+ * @implements Rule<\PhpParser\Node\Stmt>
  */
 abstract class AbstractHookDocParamMismatchRule implements Rule {
 
@@ -68,25 +70,25 @@ abstract class AbstractHookDocParamMismatchRule implements Rule {
 	/**
 	 * Returns the node type this rule processes.
 	 *
-	 * @return class-string<Expression>
+	 * @return class-string<\PhpParser\Node\Stmt>
 	 */
 	public function getNodeType(): string {
-		return Expression::class;
+		return \PhpParser\Node\Stmt::class;
 	}
 
 	/**
 	 * Processes a statement node, looking for hook calls with PHPDoc @param mismatches.
 	 *
-	 * @param Expression $node  Statement node.
-	 * @param Scope      $scope Analysis scope.
+	 * @param \PhpParser\Node\Stmt $node  Statement node.
+	 * @param Scope                $scope Analysis scope.
 	 * @return list<\PHPStan\Rules\IdentifierRuleError>
 	 */
 	public function processNode( Node $node, Scope $scope ): array { // phpcs:ignore Squiz.Commenting.FunctionComment.IncorrectTypeHint -- Rule interface requires Node
-		if ( ! $node->expr instanceof FuncCall ) {
+		$func_call = $this->extract_func_call( $node );
+
+		if ( $func_call === null ) {
 			return [];
 		}
-
-		$func_call = $node->expr;
 
 		if ( ! $func_call->name instanceof Name ) {
 			return [];
@@ -173,12 +175,43 @@ abstract class AbstractHookDocParamMismatchRule implements Rule {
 	}
 
 	/**
+	 * Extracts a FuncCall from the statement contexts where apply_filters / do_action appear:
+	 *   - standalone:  apply_filters(...)
+	 *   - assignment:  $x = apply_filters(...)
+	 *   - return:      return apply_filters(...)
+	 *
+	 * Doc comments are attached to the statement node in all three cases.
+	 *
+	 * @param Node $node Statement node.
+	 * @return FuncCall|null
+	 */
+	private function extract_func_call( Node $node ): ?FuncCall {
+		if ( $node instanceof Expression ) {
+			if ( $node->expr instanceof FuncCall ) {
+				return $node->expr;
+			}
+
+			if ( $node->expr instanceof Assign && $node->expr->expr instanceof FuncCall ) {
+				return $node->expr->expr;
+			}
+
+			return null;
+		}
+
+		if ( $node instanceof Return_ && $node->expr instanceof FuncCall ) {
+			return $node->expr;
+		}
+
+		return null;
+	}
+
+	/**
 	 * Finds the PHPDoc comment attached to the statement node.
 	 *
-	 * @param Expression $node Statement node.
+	 * @param Node $node Statement node.
 	 * @return string|null
 	 */
-	private function find_doc_comment( Expression $node ): ?string {
+	private function find_doc_comment( Node $node ): ?string {
 		$comments = $node->getAttribute( 'comments', [] );
 
 		// Reverse to pick the doc block closest to (immediately before) the call.
