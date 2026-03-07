@@ -1,0 +1,9 @@
+services:
+    -
+        class: Apermo\PhpStanWordPressRules\Extensions\SerializeReturnTypeExtension
+        tags:
+            - phpstan.broker.dynamicFunctionReturnTypeExtension
+    -
+        class: Apermo\PhpStanWordPressRules\Extensions\JsonEncodeReturnTypeExtension
+        tags:
+            - phpstan.broker.dynamicFunctionReturnTypeExtension

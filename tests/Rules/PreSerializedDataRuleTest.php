@@ -30,7 +30,7 @@ final class PreSerializedDataRuleTest extends RuleTestCase {
 	 * @return string[]
 	 */
 	public static function getAdditionalConfigFiles(): array {
-		return [ __DIR__ . '/../../rules.neon' ];
+		return [ __DIR__ . '/../phpstan-type-extensions.neon' ];
 	}
 
 	/**
