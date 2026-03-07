@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- HookDocParamMismatchRule: detect `@param` count/type mismatches in `do_action()` PHPDoc blocks
+- ActionDocParamMismatchRule: detect `@param` count/type mismatches in `do_action()` PHPDoc blocks
+- FilterDocParamMismatchRule: detect `@param` count/type mismatches in `apply_filters()` PHPDoc blocks
 
 ## [0.2.0] - Unreleased
 

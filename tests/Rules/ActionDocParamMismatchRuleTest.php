@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Apermo\PhpStanWordPressRules\Tests\Rules;
 
-use Apermo\PhpStanWordPressRules\Rules\HookDocParamMismatchRule;
+use Apermo\PhpStanWordPressRules\Rules\ActionDocParamMismatchRule;
 use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 
 /**
- * Tests for HookDocParamMismatchRule.
+ * Tests for ActionDocParamMismatchRule.
  *
- * @extends RuleTestCase<HookDocParamMismatchRule>
+ * @extends RuleTestCase<ActionDocParamMismatchRule>
  */
-final class HookDocParamMismatchRuleTest extends RuleTestCase {
+final class ActionDocParamMismatchRuleTest extends RuleTestCase {
 
 	/**
 	 * Creates the rule under test.
@@ -23,7 +23,7 @@ final class HookDocParamMismatchRuleTest extends RuleTestCase {
 	 * @return Rule
 	 */
 	protected function getRule(): Rule {
-		return new HookDocParamMismatchRule(
+		return new ActionDocParamMismatchRule(
 			self::getContainer()->getByType( PhpDocParser::class ),
 			self::getContainer()->getByType( Lexer::class ),
 		);

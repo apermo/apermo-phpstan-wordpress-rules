@@ -13,7 +13,7 @@ services:
 rules:
     - Apermo\PhpStanWordPressRules\Rules\DisallowQueryPostsRule
     - Apermo\PhpStanWordPressRules\Rules\FilterDocParamMismatchRule
-    - Apermo\PhpStanWordPressRules\Rules\HookDocParamMismatchRule
+    - Apermo\PhpStanWordPressRules\Rules\ActionDocParamMismatchRule
     - Apermo\PhpStanWordPressRules\Rules\NoBlanketSuppressionRule
     - Apermo\PhpStanWordPressRules\Rules\NoConcatenationInTranslationRule
     - Apermo\PhpStanWordPressRules\Rules\NoDynamicCodeExecutionRule
