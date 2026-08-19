@@ -15,7 +15,9 @@ jobs:
             - uses: actions/stale@v9
               with:
                   days-before-stale: 30
-                  days-before-close: 14
+                  # -1 is actions/stale's "never close" value: items are still
+                  # labelled stale, but they are never closed automatically.
+                  days-before-close: -1
                   stale-issue-label: stale
                   stale-pr-label: stale
                   exempt-issue-labels: pinned,security,in-progress
